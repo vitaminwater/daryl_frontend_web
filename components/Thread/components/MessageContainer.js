@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-const LogContainer = styled.div`
+const MessageContainer = styled.div`
   display: flex;
   flex-direction: row;
 `;
-export default LogContainer;
+export default MessageContainer;

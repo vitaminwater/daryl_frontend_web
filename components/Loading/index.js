@@ -10,8 +10,6 @@ import styled from 'styled-components';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-import loading from './img/loading.svg';
-
 const LoadingDiv = styled.div`
   position: absolute;
   top: 0; left: 0;
@@ -35,7 +33,7 @@ class Loading extends React.PureComponent { // eslint-disable-line react/prefer-
       <LoadingDiv>
         <p>
           Loading<br />
-          <img src={loading} />
+          <img src='/static/message/common/loading.svg' />
         </p>
       </LoadingDiv>
     );

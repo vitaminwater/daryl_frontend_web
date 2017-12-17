@@ -1,15 +1,19 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
+  box-sizing: border-box;
   position: absolute;
-  border-left: 6pt solid ${props => props.color || '#e0e0e0'};
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 100%;
-  padding: 10pt;
-  justify-content: stretch;
   align-items: stretch;
   align-content: stretch;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  padding: 0 10pt 0 10pt;
+
+  border-left: 6pt solid ${props => props.color || '#e0e0e0'};
+
+  justify-content: stretch;
 `;
 export default Container;

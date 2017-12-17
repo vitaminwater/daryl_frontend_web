@@ -23,17 +23,17 @@ const Date = styled.div`
   white-space:nowrap;
 `;
 
-class LogDate extends React.PureComponent {
+class MessageDate extends React.PureComponent {
 
   render() {
     const {
-      log,
+      message,
     } = this.props;
     return (
       <Container>
         <Line />
         <Date>
-          {moment(log.get('inserted_at')).format('LT')}
+          {moment(message.get('inserted_at')).format('LT')}
         </Date>
         <Line />
       </Container>
@@ -42,4 +42,4 @@ class LogDate extends React.PureComponent {
 
 }
 
-export default LogDate;
+export default MessageDate;

@@ -18,10 +18,7 @@ import messages from './messages';
 import Loading from '../Loading';
 
 import FormMessage from '../Message/FormMessage';
-import NoteMessage from '../Message/NoteMessage';
-import LinkMessage from '../Message/LinkMessage';
-import TodoMessage from '../Message/TodoMessage';
-import UnprocessedMessage from '../Message/UnprocessedMessage';
+import Message from '../Message/Message';
 
 import Container from './components/Container';
 import MessagesContainer from './components/MessagesContainer';
@@ -31,14 +28,6 @@ import MessageTime from './components/MessageTime';
 import InputContainer from './components/InputContainer';
 import TextArea from './components/TextArea';
 import Button from './components/Button';
-
-const LOG_ELEMS = {
-  FORM: FormMessage,
-  NOTE: NoteMessage,
-  LINK: LinkMessage,
-  TODO: TodoMessage,
-  UNPROCESSED: UnprocessedMessage,
-};
 
 export class Thread extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
@@ -65,7 +54,6 @@ export class Thread extends React.PureComponent { // eslint-disable-line react/p
 
   renderMessage(message, i, nextMessage) {
     const type = message.get('type'),
-      Message = LOG_ELEMS[type],
       printDaySeparator = !!(!nextMessage || (moment(message.get('inserted_at')).dayOfYear() != moment(nextMessage.get('inserted_at')).dayOfYear()));
     return (
       <div key={message.get('id')}>
@@ -115,6 +103,7 @@ export class Thread extends React.PureComponent { // eslint-disable-line react/p
 }
 
 Thread.propTypes = {
+  messages: PropTypes.array.isRequired,
   createMessage: PropTypes.func.isRequired,
   loadMoreMessages: PropTypes.func.isRequired,
 };

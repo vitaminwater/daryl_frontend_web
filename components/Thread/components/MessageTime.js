@@ -25,17 +25,17 @@ const Time = styled.div`
   white-space:nowrap;
 `;
 
-class LogTime extends React.PureComponent {
+class MessageTime extends React.PureComponent {
 
   render() {
     const {
-      log,
+      message,
     } = this.props;
     return (
       <Container>
         <Line />
         <Time>
-          {moment(log.get('inserted_at')).format('MMM Do YY')}
+          {moment(message.get('inserted_at')).format('MMM Do YY')}
         </Time>
         <Line />
       </Container>
@@ -44,4 +44,4 @@ class LogTime extends React.PureComponent {
 
 }
 
-export default LogTime;
+export default MessageTime;
