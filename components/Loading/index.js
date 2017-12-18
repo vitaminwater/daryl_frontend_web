@@ -29,10 +29,11 @@ const LoadingDiv = styled.div`
 
 class Loading extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
+    const { text } = this.props;
     return (
       <LoadingDiv>
         <p>
-          Loading<br />
+          {text}<br />
           <img src='/static/message/common/loading.svg' />
         </p>
       </LoadingDiv>

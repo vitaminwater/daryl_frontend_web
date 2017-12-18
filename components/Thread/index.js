@@ -103,7 +103,7 @@ export class Thread extends React.PureComponent { // eslint-disable-line react/p
 }
 
 Thread.propTypes = {
-  messages: PropTypes.array.isRequired,
+  messages: PropTypes.object.isRequired,
   createMessage: PropTypes.func.isRequired,
   loadMoreMessages: PropTypes.func.isRequired,
 };

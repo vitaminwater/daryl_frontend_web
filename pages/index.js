@@ -1,11 +1,11 @@
 import { fromJS } from 'immutable';
-
 import React from 'react'
+import styled from 'styled-components'
+
+import withAuth from '../hoc/withAuth';
 
 import {increment, loadData, startClock} from '../redux/actions'
 import {withReduxSaga} from '../redux/store'
-
-import styled from 'styled-components'
 
 import Thread from '../components/Thread';
 
@@ -15,18 +15,32 @@ const Container = styled.div`
   width: 100%; height: 100%;
 `;
 
+const thread = [{
+  id: 'pouet',
+  text: 'In publishing and graphic design, lorem ipsum is a filler text or greeking commonly used to demonstrate the textual elements of a graphic document or visual presentation. Replacing meaningful content with placeholder text allows designers to design the form of the content before the content itself has been produced.',
+}];
+
 class Index extends React.Component {
 
   render () {
     return (
       <Container>
-        <Thread messages={fromJS([{
-          text: 'lol',
-        }])} />
-    </Container>
+        <Thread 
+          messages={fromJS(thread)}
+          createMessage={this._handleCreateMessage}
+          loadMoreMessages={this._handleLoadMoreMessages} />
+      </Container>
     );
+  }
+
+  _handleCreateMessage = (m) => {
+    console.log('_handleCreateMessage', m.get('text'));
+  }
+
+  _handleLoadMoreMessages = () => {
+    console.log('_handleLoadMoreMessages');
   }
 
 }
 
-export default withReduxSaga(Index);
+export default withAuth(Index);

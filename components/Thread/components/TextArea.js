@@ -6,6 +6,7 @@ const TextArea = styled.textarea`
   padding: 5px;
   font-family: 'Roboto Light', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 200;
+  font-size: 1em;
   margin-right: 5pt;
   resize: none;
 
