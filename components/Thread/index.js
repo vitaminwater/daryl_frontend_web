@@ -34,7 +34,7 @@ export class Thread extends React.PureComponent { // eslint-disable-line react/p
   constructor() {
     super();
 
-    this.state = {text: ''};
+    this.state = {text: '', history: [], historyIndex: -1};
   }
 
   componentDidMount() {
@@ -76,12 +76,27 @@ export class Thread extends React.PureComponent { // eslint-disable-line react/p
           }
         </MessagesContainer>
         <InputContainer>
-          <TextArea ref='textarea' value={this.state.text} onChange={({ target: { value: text } }) => this.setState({text})} onKeyPress={this._handleKeyPress} />
+          <TextArea ref='textarea' value={this.state.text} onChange={({ target: { value: text } }) => this.setState({text})} onKeyPress={this._handleKeyPress} onKeyDown={this._handleKeyDown} />
           <Button onClick={this._handleSend}>SEND</Button>
         </InputContainer>
         {loading && <Loading />}
       </Container>
     );
+  }
+
+  _handleKeyDown = (e) => {
+    if (e.keyCode == 38) {
+      e.preventDefault();
+      const newHistoryIndex = this.state.historyIndex + 1;
+      this.setState({historyIndex: newHistoryIndex, text: this.state.history[newHistoryIndex]});
+    } else if (e.keyCode == 40) {
+      e.preventDefault();
+      const newHistoryIndex = this.state.historyIndex - 1;
+      if (newHistoryIndex < -1) {
+        return;
+      }
+      this.setState({historyIndex: newHistoryIndex, text: this.state.history[newHistoryIndex]});
+    }
   }
 
   _handleKeyPress = (e) => {
@@ -99,6 +114,9 @@ export class Thread extends React.PureComponent { // eslint-disable-line react/p
     });
     this.props.createMessage(message);
     this.setState({text: ''});
+
+    const h = this.state.history;
+    this.setState({history: [text].concat(h), historyIndex: -1});
   }
 }
 
