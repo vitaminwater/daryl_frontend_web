@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import withAuth from '../hoc/withAuth';
 
-import {increment, loadData, startClock} from '../redux/actions'
+import { Creators } from '../redux/actions'
 import {withReduxSaga} from '../redux/store'
 
 import Thread from '../components/Thread';
@@ -35,6 +35,7 @@ class Index extends React.Component {
 
   _handleCreateMessage = (m) => {
     console.log('_handleCreateMessage', m.get('text'));
+    this.props.dispatch(Creators.messageCreate(m.get('text'), {}));
   }
 
   _handleLoadMoreMessages = () => {

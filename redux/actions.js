@@ -7,6 +7,8 @@ const { Types, Creators } = createActions({
   authToken: ['token'],
   authDarylId: ['darylId'],
   authName: ['name'],
+
+  messageCreate: ['text', 'attrs'],
 }, {})
 
 export {

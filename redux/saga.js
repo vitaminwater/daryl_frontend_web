@@ -1,7 +1,7 @@
 /* global fetch */
 
 import {delay} from 'redux-saga'
-import {all, call, put, take, takeLatest, select} from 'redux-saga/effects'
+import {all, call, put, take, takeEvery, select} from 'redux-saga/effects'
 import es6promise from 'es6-promise'
 import 'isomorphic-unfetch'
 
@@ -50,9 +50,14 @@ function *checkAuth() {
   }
 }
 
+function *messageCreate(action) {
+  console.log('messageCreate', action);
+}
+
 function *rootSaga () {
   yield call(loadAuth);
   yield call(checkAuth);
+  yield takeEvery('MESSAGE_CREATE', messageCreate);
 }
 
 export default rootSaga
