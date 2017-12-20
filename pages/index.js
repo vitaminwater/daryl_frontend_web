@@ -2,10 +2,10 @@ import { fromJS } from 'immutable';
 import React from 'react'
 import styled from 'styled-components'
 
-import withAuth from '../hoc/withAuth';
+import { withAuth } from '../hoc/withAuth';
 
 import { Creators } from '../redux/actions'
-import {withReduxSaga} from '../redux/store'
+import { withReduxSaga } from '../redux/store'
 
 import Thread from '../components/Thread';
 

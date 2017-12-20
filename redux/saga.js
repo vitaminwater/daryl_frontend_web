@@ -15,14 +15,10 @@ const GET_DARYL_URL = `${API_URL}/daryl/cmd/get`;
 
 function *loadAuth() {
   try {
-    if (typeof window == 'undefined') {
-      // TODO server side etcd
-    } else {
-      const authJSON = window.localStorage.getItem('auth');
-      if (authJSON) {
-        const auth = JSON.parse(authJSON);
-        yield put(Creators.auth(true, false, auth.token, auth.darylId, auth.name));
-      }
+    const authJSON = window.localStorage.getItem('auth');
+    if (authJSON) {
+      const auth = JSON.parse(authJSON);
+      yield put(Creators.auth(true, false, auth.token, auth.darylId, auth.name));
     }
   } catch(e) {
     yield put(Creators.auth(true, false, '', '', ''));
@@ -51,6 +47,7 @@ function *checkAuth() {
 }
 
 function *messageCreate(action) {
+  if (typeof window == 'undefined') return;
   console.log('messageCreate', action);
 }
 

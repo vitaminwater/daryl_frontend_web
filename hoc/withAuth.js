@@ -1,24 +1,64 @@
 import React from 'react';
-import {withReduxSaga} from '../redux/store'
+import styled from 'styled-components';
+import Router from 'next/router';
 import {connect} from 'react-redux';
 
-const withAuth = (WrappedComponent) => {
+import Loading from '../components/Loading';
+
+import {withReduxSaga} from '../redux/store'
+
+import { selectLoading, selectAuthenticated } from '../redux/selectors';
+
+const Container = styled.div`
+  flex: 1;
+`;
+
+const withAuthCheck = (loading, authenticated, redirect) => WrappedComponent => {
   const Wrapper = class extends React.Component {
 
-    static async getInitialProps({ req, res, query }) {
-      return {loadingAuth: true};
+    constructor() {
+      super();
+      this.state = {clientSide: typeof window !== 'undefined', redirecting: false};
     }
 
     componentWillMount() {
+      this._handleProps(this.props);
+    }
+
+    componentWillReceiveProps(newProps) {
+      this._handleProps(newProps);
     }
 
     render() {
+      const loading = this.props.loading || !this.state.clientSide || this.state.redirecting;
       return (
-        <WrappedComponent {...this.props} />
+        <Container>
+          {loading ? <Loading text={this.props.redirecting ? 'Redirecting...' : 'Checking auth'} /> : <WrappedComponent {...this.props} />}
+        </Container>
       );
     }
+
+    _handleProps(props) {
+      if (!this.state.clientSide) return;
+      if (props.loading == loading && props.authenticated == authenticated) {
+        this.setState({redirecting: true});
+        Router.replace(redirect);
+      }
+    }
   }
-  return withReduxSaga(connect()(Wrapper));
+
+  const mapStateToProps = (state) => ({
+    loading: selectLoading()(state),
+    authenticated: selectAuthenticated()(state),
+  })
+
+  return withReduxSaga(connect(mapStateToProps)(Wrapper));
 }
 
-export default withAuth;
+const withAuth = withAuthCheck(false, false, '/create');
+const withoutAuth = withAuthCheck(false, true, '/');
+
+export {
+  withAuth,
+  withoutAuth,
+}
