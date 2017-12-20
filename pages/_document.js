@@ -23,12 +23,28 @@ export default class MyDocument extends Document {
           <style>{`
             textarea, input, button { outline: none; }
             textarea:focus, input:focus, button:focus { outline: none; }
-            body {margin: 0; padding: 0; overflow-x: hidden; font-family: Roboto Light, Helvetica Neue, Helvetica, Arial, sans-serif, -apple-system;}
+            body {font-size: 1rem; margin: 0; padding: 0; overflow-x: hidden; font-family: Roboto Light, Helvetica Neue, Helvetica, Arial, sans-serif, -apple-system;}
 
             ::-webkit-input-placeholder { color:#D1D1D1; }
             ::-moz-placeholder { color:#D1D1D1; } /* firefox 19+ */
             :-ms-input-placeholder { color:#D1D1D1; } /* ie */
             input:-moz-placeholder { color:#D1D1D1; }
+
+          .react-rotating-text-cursor {
+            animation: blinking-cursor 0.8s cubic-bezier(0.68, 0.01, 0.01, 0.99) 0s infinite;
+          }
+
+          @keyframes blinking-cursor {
+            0% {
+              opacity: 0;
+            }
+            50% {
+              opacity: 1;
+            }
+            100% {
+              opacity: 0;
+            }
+          }
           `}</style>
           {this.props.styleTags}
         </Head>

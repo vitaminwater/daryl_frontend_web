@@ -47,11 +47,11 @@ function *checkAuth() {
 }
 
 function *messageCreate(action) {
-  if (typeof window == 'undefined') return;
   console.log('messageCreate', action);
 }
 
 function *rootSaga () {
+  if (typeof window == 'undefined') return;
   yield call(loadAuth);
   yield call(checkAuth);
   yield takeEvery('MESSAGE_CREATE', messageCreate);

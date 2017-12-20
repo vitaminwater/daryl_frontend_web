@@ -34,7 +34,7 @@ class Loading extends React.PureComponent { // eslint-disable-line react/prefer-
       <LoadingDiv>
         <p>
           {text}<br />
-          <img src='/static/message/common/loading.svg' />
+          <img src='/static/loading.svg' />
         </p>
       </LoadingDiv>
     );

@@ -55,7 +55,7 @@ const withAuthCheck = (loading, authenticated, redirect) => WrappedComponent => 
   return withReduxSaga(connect(mapStateToProps)(Wrapper));
 }
 
-const withAuth = withAuthCheck(false, false, '/create');
+const withAuth = withAuthCheck(false, false, '/welcome');
 const withoutAuth = withAuthCheck(false, true, '/');
 
 export {

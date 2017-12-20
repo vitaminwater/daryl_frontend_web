@@ -55,7 +55,7 @@ export class Thread extends React.PureComponent { // eslint-disable-line react/p
 
   renderMessage(message, i, nextMessage) {
     const type = message.get('type'),
-      printDaySeparator = !!(!nextMessage || (moment(message.get('inserted_at')).dayOfYear() != moment(nextMessage.get('inserted_at')).dayOfYear()));
+      printDaySeparator = !!(!nextMessage || (moment(message.get('at')).dayOfYear() != moment(nextMessage.get('at')).dayOfYear()));
     return (
       <div key={message.get('id')}>
         { printDaySeparator && <MessageTime message={message} /> }
@@ -68,9 +68,9 @@ export class Thread extends React.PureComponent { // eslint-disable-line react/p
   }
 
   render() {
-    const { messages, color, loading } = this.props;
+    const { messages, loading } = this.props;
     return (
-      <Container color={color}>
+      <Container>
         <MessagesContainer ref='messageScroll'>
           {
             messages.map((message, i) => this.renderMessage(message, i, i < messages.size-1 ? messages.get(i+1) : undefined))
