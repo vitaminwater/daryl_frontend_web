@@ -7,6 +7,14 @@ import Container from '../Form/Container';
 import Title from '../../widgets/Title';
 import SubTitle from '../../widgets/SubTitle';
 
+const Instructions = styled.p`
+  text-align: center;
+`;
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 class End extends React.PureComponent {
 
   constructor() {
@@ -18,11 +26,14 @@ class End extends React.PureComponent {
   render() {
     const {
       left,
+      value,
       opacity,
     } = this.props;
     return (
       <Container {...{left, opacity}} >
-        lol
+        <Title>That's it 🤖</Title>
+        <SubTitle><i>{capitalizeFirstLetter(value.getIn(['name', 'value']))}</i> is in the making,</SubTitle>
+        <Instructions>He'll contact you by mail for further instructions.</Instructions>
       </Container>
     )
   }
