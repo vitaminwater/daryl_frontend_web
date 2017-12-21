@@ -33,7 +33,7 @@ class End extends React.PureComponent {
       <Container {...{left, opacity}} >
         <Title>That's it 🤖</Title>
         <SubTitle><i>{capitalizeFirstLetter(value.getIn(['name', 'value']))}</i> is in the making,</SubTitle>
-        <Instructions>He'll contact you by mail for further instructions.</Instructions>
+        <Instructions>He'll contact you by email for further instructions.</Instructions>
       </Container>
     )
   }
