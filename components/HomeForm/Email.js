@@ -53,11 +53,11 @@ class Email extends React.Component {
     )
   }
 
-  _handleCTAClicked = () => {
+  _handleCTAClicked = (e) => {
     this.setState({showError: true});
    
     const { value, } = this.props;
-    if (value.getIn(['email', 'invalid'])) return;
+    if (value.getIn(['email', 'invalid'])) { e.preventDefault(); return; }
     if (this.state.submitted) return;
 
     const { stepPassed } = this.props;

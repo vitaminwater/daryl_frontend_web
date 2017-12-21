@@ -48,11 +48,11 @@ class Name extends React.Component {
     )
   }
 
-  _handleCTAClicked = () => {
+  _handleCTAClicked = (e) => {
     this.setState({showError: true});
 
     const { value, } = this.props;
-    if (value.getIn(['name', 'invalid'])) return;
+    if (value.getIn(['name', 'invalid'])) { e.preventDefault(); return; }
 
     if (this.state.submitted) return;
 
