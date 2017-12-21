@@ -33,7 +33,8 @@ const withAuthCheck = (loading, authenticated, redirect) => WrappedComponent => 
       const loading = this.props.loading || !this.state.clientSide || this.state.redirecting;
       return (
         <Container>
-          {loading ? <Loading text={this.props.redirecting ? 'Redirecting...' : 'Checking auth'} /> : <WrappedComponent {...this.props} />}
+          {(!loading || authenticated) && <WrappedComponent {...this.props} />}
+          {loading && <Loading text={this.props.redirecting ? 'Redirecting...' : 'Checking auth'} />}
         </Container>
       );
     }

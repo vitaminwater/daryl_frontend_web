@@ -2,13 +2,13 @@ import styled from 'styled-components'
 import media from '../styles/media';
 
 const CTA = styled.button`
-  padding: 1rem 4rem;
+  padding: 1rem 3rem;
   margin: 2rem 0;
   border-radius: 1rem;
   cursor: pointer;
 
   color: white;
-  font-size: 2.5rem;
+  font-size: 1.6em;
   text-align: center;
   font-weight: 550;
 
@@ -16,21 +16,21 @@ const CTA = styled.button`
   border: 5px solid #627950;
 
   ${media.desktop`
-    font-size: 2rem;
+    font-size: 2em;
     padding: 0.75rem 2rem;
     border-width: 4px;
     border-radius: 0.75rem;
   `}
 
   ${media.tablet`
-    font-size: 1.6rem;
+    font-size: 1.6em;
     padding: 0.5rem 1.5rem;
     border-width: 3px;
     border-radius: 0.75rem;
   `}
 
   ${media.phone`
-    font-size: 1.4rem;
+    font-size: 1.4em;
     padding: 0.4rem 1.3rem;
     border-width: 2px;
     border-radius: 0.6rem;

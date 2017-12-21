@@ -17,7 +17,7 @@ const Label = styled(SubTitle)`
   text-align: left;
 `;
 
-class Name extends React.Component {
+class Password extends React.Component {
 
   constructor() {
     super();
@@ -28,22 +28,23 @@ class Name extends React.Component {
   render() {
     const { showError } = this.state;
     const {
-      value,
       left,
+      value,
       opacity,
       onValueChanged,
     } = this.props;
     return (
       <Container {...{left, opacity}} >
-        <Label>First, name it:</Label>
+        <Label>Type in a password to secure it:</Label>
+        <small>at least 5 characters</small>
         <Input
-          type='text'
-          value={value.getIn(['name', 'value'])}
-          invalid={showError && value.getIn(['name', 'invalid'])}
-          placeholder='ex: Daryl'
+          type='password'
+          placeholder='ex: •••••••••••••••••'
+          value={value.getIn(['password', 'value'])}
+          invalid={showError && value.getIn(['password', 'invalid'])}
           onKeyDown={this._handleOnKeyDown}
-          onChange={(e) => onValueChanged('name', e.target.value, !this._isValid(e.target.value))} />
-        <CTA invalid={value.getIn(['name', 'invalid'])} onClick={this._handleCTAClicked}>NEXT</CTA>
+          onChange={(e) => onValueChanged('password', e.target.value, !this._isValid(e.target.value))} />
+        <CTA invalid={value.getIn(['password', 'invalid'])} onClick={this._handleCTAClicked}>NEXT</CTA>
       </Container>
     )
   }
@@ -52,7 +53,7 @@ class Name extends React.Component {
     this.setState({showError: true});
 
     const { value, } = this.props;
-    if (value.getIn(['name', 'invalid'])) return;
+    if (value.getIn(['password', 'invalid'])) return;
 
     if (this.state.submitted) return;
 
@@ -66,12 +67,12 @@ class Name extends React.Component {
   }
 
   _isValid(value) {
-    return value;
+    return value && value.length > 5;
   }
 
 }
 
-Name.propTypes = {
+Password.propTypes = {
   value: PropTypes.object.isRequired,
   left: PropTypes.number.isRequired,
   opacity: PropTypes.number.isRequired,
@@ -79,4 +80,4 @@ Name.propTypes = {
   onValueChanged: PropTypes.func.isRequired,
 };
 
-export default Name;
+export default Password;

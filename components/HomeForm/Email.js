@@ -17,7 +17,12 @@ const Label = styled(SubTitle)`
   text-align: left;
 `;
 
-class Name extends React.Component {
+function validateEmail(email) {
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+
+class Email extends React.Component {
 
   constructor() {
     super();
@@ -35,25 +40,24 @@ class Name extends React.Component {
     } = this.props;
     return (
       <Container {...{left, opacity}} >
-        <Label>First, name it:</Label>
+        <Label>Last step, the email to join you when it's ready</Label>
         <Input
           type='text'
-          value={value.getIn(['name', 'value'])}
-          invalid={showError && value.getIn(['name', 'invalid'])}
-          placeholder='ex: Daryl'
+          value={value.getIn(['email', 'value'])}
+          invalid={showError && value.getIn(['email', 'invalid'])}
+          placeholder='ex: daryl@daryl.com'
           onKeyDown={this._handleOnKeyDown}
-          onChange={(e) => onValueChanged('name', e.target.value, !this._isValid(e.target.value))} />
-        <CTA invalid={value.getIn(['name', 'invalid'])} onClick={this._handleCTAClicked}>NEXT</CTA>
+          onChange={(e) => onValueChanged('email', e.target.value, !this._isValid(e.target.value))} />
+        <CTA invalid={value.getIn(['email', 'invalid'])} onClick={this._handleCTAClicked}>DONE</CTA>
       </Container>
     )
   }
 
   _handleCTAClicked = () => {
     this.setState({showError: true});
-
+   
     const { value, } = this.props;
-    if (value.getIn(['name', 'invalid'])) return;
-
+    if (value.getIn(['email', 'invalid'])) return;
     if (this.state.submitted) return;
 
     const { stepPassed } = this.props;
@@ -66,12 +70,12 @@ class Name extends React.Component {
   }
 
   _isValid(value) {
-    return value;
+    return value && validateEmail(value);
   }
 
 }
 
-Name.propTypes = {
+Email.propTypes = {
   value: PropTypes.object.isRequired,
   left: PropTypes.number.isRequired,
   opacity: PropTypes.number.isRequired,
@@ -79,4 +83,4 @@ Name.propTypes = {
   onValueChanged: PropTypes.func.isRequired,
 };
 
-export default Name;
+export default Email;

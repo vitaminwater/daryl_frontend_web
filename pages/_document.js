@@ -23,7 +23,7 @@ export default class MyDocument extends Document {
           <style>{`
             textarea, input, button { outline: none; }
             textarea:focus, input:focus, button:focus { outline: none; }
-            body {font-size: 1rem; margin: 0; padding: 0; overflow-x: hidden; font-family: Roboto Light, Helvetica Neue, Helvetica, Arial, sans-serif, -apple-system;}
+            body {margin: 0; padding: 0; overflow-x: hidden; font-family: Roboto Light, Helvetica Neue, Helvetica, Arial, sans-serif, -apple-system;}
 
             ::-webkit-input-placeholder { color:#D1D1D1; }
             ::-moz-placeholder { color:#D1D1D1; } /* firefox 19+ */

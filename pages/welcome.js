@@ -21,6 +21,7 @@ const Container = styled.div`
 `;
 
 const Logo = styled.div`
+  flex: 0.5;
   width: 200pt; height 200pt;
 
   background-image: url(/static/logo.svg);
@@ -29,13 +30,19 @@ const Logo = styled.div`
   background-repeat: no-repeat;
 `;
 
+const Empty = styled.div`
+  flex: 0.25;
+`;
+
 class Welcome extends React.Component {
 
   render() {
     return (
       <Container>
+        <Empty />
         <Logo />
         <HomeForm />
+        <Empty />
       </Container>
     )
   }

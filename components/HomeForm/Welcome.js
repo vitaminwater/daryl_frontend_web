@@ -40,7 +40,7 @@ class Welcome extends React.Component {
       <Container {...{left, opacity}} >
         <Title>Daryl,</Title>
         <SubTitle>I should <ReactRotatingText deletingInterval={10} items={USAGE_EXAMPLES} /></SubTitle>
-        <CTA onClick={this._handleCTAClicked}>🤖CREATE YOUR DARYL</CTA>
+        <CTA onClick={this._handleCTAClicked}>🤖&nbsp;CREATE YOUR DARYL</CTA>
       </Container>
     )
   }

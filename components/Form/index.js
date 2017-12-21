@@ -7,9 +7,10 @@ import { TransitionMotion, spring } from 'react-motion';
 const precisionSpring = (value) => spring(value, {precision: 0.1/*, stiffness: 12, damping: 30*/});
 
 const Container = styled.div`
+  flex: 1;
   position: relative;
   top: 0; left: 0;
-  width: 100vw; height: 100vh;
+  width: 100%;
   overflow: hidden;
 `;
 
@@ -32,6 +33,7 @@ class Form extends React.PureComponent {
   render() {
     const {
       finalRoute,
+      value,
       steps,
       formStep,
     } = this.props;
@@ -68,7 +70,7 @@ class Form extends React.PureComponent {
             {interpolatedStyles.map(config => {
               const Step = steps[config.key];
               return (
-                <Step {...config.style} stepPassed={this.props.stepPassed} key={config.key} />
+                <Step value={value} {...config.style} onValueChanged={this.props.onValueChanged} stepPassed={this.props.stepPassed} key={config.key} />
               );
             })}
           </Container>
@@ -79,9 +81,11 @@ class Form extends React.PureComponent {
 }
 
 Form.propTypes = {
+  value: PropTypes.object.isRequired,
   finalRoute: PropTypes.string,
   steps: PropTypes.array.isRequired,
   stepPassed: PropTypes.func.isRequired,
+  onValueChanged: PropTypes.func.isRequired,
   formStep: PropTypes.number.isRequired,
 };
 
