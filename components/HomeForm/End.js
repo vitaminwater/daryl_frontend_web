@@ -20,7 +20,24 @@ class End extends React.PureComponent {
   constructor() {
     super();
 
-    this.state = {submitted: false};
+    this.state = {submitted: false, loading: true, timeout: false};
+  }
+
+  componentDidMount() {
+    const { submitted } = this.props;
+    setTimeout(() => {
+      const { loading } = this.props;
+      this.setState({loading: loading, timeout: true});
+    }, 5000);
+    submitted();
+  }
+
+  componentWillReceiveProps(newProps) {
+    const { loading } = this.props;
+    const { timeout } = this.state;
+    if (loading != newProps.loading && timeout) {
+      this.setState({loading: newProps.loading});
+    }
   }
 
   render() {
@@ -29,21 +46,16 @@ class End extends React.PureComponent {
       value,
       opacity,
     } = this.props;
+    const { loading } = this.state;
     return (
       <Container {...{left, opacity}} >
-        <Title>That's it 🤖</Title>
-        <SubTitle><i>{capitalizeFirstLetter(value.getIn(['name', 'value']))}</i> is in the making,</SubTitle>
-        <Instructions>He'll contact you by email for further instructions.</Instructions>
+        { loading && <SubTitle>Please wait..</SubTitle> }
+        { loading && <img src='/static/loading.svg' /> }
+        { !loading && <Title>That's it 🤖</Title> }
+        { !loading && <SubTitle><i>{capitalizeFirstLetter(value.getIn(['name', 'value']))}</i> is in the making,</SubTitle> }
+        { !loading && <Instructions>He'll contact you by email for further instructions.</Instructions> }
       </Container>
     )
-  }
-
-  _handleCTAClicked = () => {
-    if (this.state.submitted) return;
-
-    const { stepPassed } = this.props;
-    this.setState({submitted: true});
-    stepPassed();
   }
 }
 
@@ -51,6 +63,7 @@ End.propTypes = {
   left: PropTypes.number.isRequired,
   opacity: PropTypes.number.isRequired,
   stepPassed: PropTypes.func.isRequired,
+  submitted: PropTypes.func.isRequired,
   onValueChanged: PropTypes.func.isRequired,
 };
 

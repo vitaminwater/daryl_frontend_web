@@ -7,7 +7,7 @@ import Loading from '../components/Loading';
 
 import {withReduxSaga} from '../redux/store'
 
-import { selectLoading, selectAuthenticated } from '../redux/selectors';
+import { selectCreating, selectLoading, selectAuthenticated } from '../redux/selectors';
 
 const Container = styled.div`
   flex: 1;
@@ -30,18 +30,20 @@ const withAuthCheck = (loading, authenticated, redirect) => WrappedComponent => 
     }
 
     render() {
-      const loading = this.props.loading || !this.state.clientSide || this.state.redirecting;
+      const { creating } = this.props;
+      const loading = (this.props.loading && !creating) || !this.state.clientSide || this.state.redirecting;
       return (
         <Container>
           {(!loading || authenticated) && <WrappedComponent {...this.props} />}
-          {loading && <Loading text={this.props.redirecting ? 'Redirecting...' : 'Checking auth'} />}
+          {loading && !creating && <Loading text={this.props.redirecting ? 'Redirecting...' : 'Checking auth'} />}
         </Container>
       );
     }
 
     _handleProps(props) {
+      const { creating } = this.props;
       if (!this.state.clientSide) return;
-      if (props.loading == loading && props.authenticated == authenticated) {
+      if (props.loading == loading && props.authenticated == authenticated && !creating) {
         this.setState({redirecting: true});
         Router.replace(redirect);
       }
@@ -49,6 +51,7 @@ const withAuthCheck = (loading, authenticated, redirect) => WrappedComponent => 
   }
 
   const mapStateToProps = (state) => ({
+    creating: selectCreating()(state),
     loading: selectLoading()(state),
     authenticated: selectAuthenticated()(state),
   })

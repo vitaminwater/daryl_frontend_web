@@ -33,9 +33,9 @@ class Form extends React.PureComponent {
   render() {
     const {
       finalRoute,
-      value,
       steps,
       formStep,
+      ...props,
     } = this.props;
     return (
       <TransitionMotion
@@ -70,7 +70,7 @@ class Form extends React.PureComponent {
             {interpolatedStyles.map(config => {
               const Step = steps[config.key];
               return (
-                <Step value={value} {...config.style} onValueChanged={this.props.onValueChanged} stepPassed={this.props.stepPassed} key={config.key} />
+                <Step {...props} {...config.style} key={config.key} />
               );
             })}
           </Container>
@@ -85,6 +85,7 @@ Form.propTypes = {
   finalRoute: PropTypes.string,
   steps: PropTypes.array.isRequired,
   stepPassed: PropTypes.func.isRequired,
+  submitted: PropTypes.func.isRequired,
   onValueChanged: PropTypes.func.isRequired,
   formStep: PropTypes.number.isRequired,
 };

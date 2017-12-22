@@ -40,7 +40,7 @@ class Email extends React.Component {
     } = this.props;
     return (
       <Container {...{left, opacity}} >
-        <Label>Last step, the email to join you when it's ready</Label>
+        <Label>The email to join you when it's ready</Label>
         <Input
           type='text'
           value={value.getIn(['email', 'value'])}
@@ -48,7 +48,7 @@ class Email extends React.Component {
           placeholder='ex: daryl@daryl.com'
           onKeyDown={this._handleOnKeyDown}
           onChange={(e) => onValueChanged('email', e.target.value, !this._isValid(e.target.value))} />
-        <CTA invalid={value.getIn(['email', 'invalid'])} onClick={this._handleCTAClicked}>DONE</CTA>
+        <CTA invalid={value.getIn(['email', 'invalid'])} onClick={this._handleCTAClicked}>NEXT</CTA>
       </Container>
     )
   }

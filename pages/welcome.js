@@ -5,6 +5,8 @@ import { withoutAuth } from '../hoc/withAuth';
 
 import HomeForm from '../components/HomeForm';
 
+import { Creators } from '../redux/actions';
+
 const Container = styled.div`
   position: absolute;
   top: 0; left: 0;
@@ -41,10 +43,15 @@ class Welcome extends React.Component {
       <Container>
         <Empty />
         <Logo />
-        <HomeForm />
+        <HomeForm submitted={this._handleFormSubmitted} />
         <Empty />
       </Container>
     )
+  }
+
+  _handleFormSubmitted = (data) => {
+    const { dispatch } = this.props;
+    dispatch(Creators.createDaryl(data.name, data.email, data.password));
   }
 
 }

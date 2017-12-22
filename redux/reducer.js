@@ -3,6 +3,7 @@ import { createReducer } from 'reduxsauce'
 
 export const INITIAL_STATE = fromJS({
   auth: {
+    creating: false,
     loading: true,
     authenticated: false,
     token: '',
@@ -20,6 +21,7 @@ const mergeState = prefix => (state, action) => {
 
 export const HANDLERS = {
   ['AUTH']: mergeState('auth'),
+  ['AUTH_CREATING']: mergeState('auth'),
   ['AUTH_LOADING']: mergeState('auth'),
   ['AUTH_AUTHENTICATED']: mergeState('auth'),
   ['AUTH_TOKEN']: mergeState('auth'),

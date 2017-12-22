@@ -8,6 +8,7 @@ const attrSelector = attr => () => createSelector(
 )
 
 export const selectLoading = attrSelector('loading')
+export const selectCreating = attrSelector('creating')
 export const selectAuthenticated = attrSelector('authenticated')
 export const selectToken = attrSelector('token')
 export const selectDarylId = attrSelector('token')

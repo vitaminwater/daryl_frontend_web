@@ -12,6 +12,7 @@ es6promise.polyfill()
 
 const API_URL = 'http://localhost:8042';
 const GET_DARYL_URL = `${API_URL}/daryl/cmd/get`;
+const CREATE_DARYL_URL = `${API_URL}/public/daryl`;
 
 function *loadAuth() {
   try {
@@ -46,6 +47,33 @@ function *checkAuth() {
   }
 }
 
+function *createDaryl(action) {
+  console.log('createDaryl', action);
+  try {
+    yield put(Creators.authCreating(true));
+    const r = yield call(fetch, CREATE_DARYL_URL, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      body: JSON.stringify({
+        name: action.name,
+        email: action.email,
+        password: action.password,
+      }),
+    });
+    const { status, daryl: { id }, token: { hash: token } } = yield call(() => r.json());
+    yield put(Creators.auth(false, true, token, id, action.name));
+    window.localStorage.setItem('auth', JSON.stringify({
+      token: token,
+      darylid: id,
+      name: action.name,
+    }));
+  } catch (e) {
+    yield put(Creators.auth(false, false, '', '', ''));
+  }
+}
+
 function *messageCreate(action) {
   console.log('messageCreate', action);
 }
@@ -54,6 +82,7 @@ function *rootSaga () {
   if (typeof window == 'undefined') return;
   yield call(loadAuth);
   yield call(checkAuth);
+  yield takeEvery('CREATE_DARYL', createDaryl);
   yield takeEvery('MESSAGE_CREATE', messageCreate);
 }
 

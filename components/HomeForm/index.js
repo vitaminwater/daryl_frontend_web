@@ -1,6 +1,8 @@
 import { fromJS } from 'immutable';
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components'
+import { connect } from 'redux';
 
 import Form from '../Form';
 import Welcome from './Welcome';
@@ -19,11 +21,11 @@ class HomeForm extends React.Component {
         value: '',
         invalid: true,
       },
-      password: {
+      email: {
         value: '',
         invalid: true,
       },
-      email: {
+      password: {
         value: '',
         invalid: true,
       },
@@ -35,13 +37,14 @@ class HomeForm extends React.Component {
       <Form steps={[
           Welcome,
           Name,
-          Password,
           Email,
+          Password,
           End,
         ]}
         value={this.state.data}
         formStep={this.state.step}
         stepPassed={this._handleStepPassed}
+        submitted={this._handleFormSubmitted}
         onValueChanged={this._handleValueChanged} />
     )
   }
@@ -57,6 +60,21 @@ class HomeForm extends React.Component {
     this.setState({step: this.state.step+1});
   }
 
+  _handleFormSubmitted = () => {
+    const { submitted } = this.props;
+    const { data } = this.state;
+    console.log('_handleFormSubmitted');
+    submitted({
+      name: data.getIn(['name', 'value']),
+      email: data.getIn(['email', 'value']),
+      password: data.getIn(['password', 'value']),
+    });
+  }
+
 }
+
+HomeForm.propTypes = {
+  submitted: PropTypes.func.isRequired,
+};
 
 export default HomeForm; 

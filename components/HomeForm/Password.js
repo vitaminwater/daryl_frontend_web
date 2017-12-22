@@ -44,7 +44,7 @@ class Password extends React.Component {
           invalid={showError && value.getIn(['password', 'invalid'])}
           onKeyDown={this._handleOnKeyDown}
           onChange={(e) => onValueChanged('password', e.target.value, !this._isValid(e.target.value))} />
-        <CTA invalid={value.getIn(['password', 'invalid'])} onClick={this._handleCTAClicked}>NEXT</CTA>
+        <CTA invalid={value.getIn(['password', 'invalid'])} onClick={this._handleCTAClicked}>DONE</CTA>
       </Container>
     )
   }
