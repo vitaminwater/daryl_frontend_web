@@ -18,8 +18,8 @@ import messages from './messages';
 
 import Loading from '../Loading';
 
-import FormMessage from '../Message/FormMessage';
-import Message from '../Message/Message';
+import FormMessage from './Message/FormMessage';
+import Message from './Message/Message';
 
 import Container from './components/Container';
 import MessagesContainer from './components/MessagesContainer';
