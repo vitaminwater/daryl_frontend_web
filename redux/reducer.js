@@ -10,6 +10,15 @@ export const INITIAL_STATE = fromJS({
     darylId: '',
     name: '',
   },
+  session: {
+    loading: false,
+    exists: false,
+    slices: [],
+  },
+  habits: {
+    loading: false,
+    habits: [],
+  },
 })
 
 const mergeState = prefix => (state, action) => {
