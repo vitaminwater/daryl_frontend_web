@@ -11,8 +11,11 @@ import { selectToken } from './selectors';
 es6promise.polyfill()
 
 const API_URL = 'http://localhost:8042';
-const GET_DARYL_URL = `${API_URL}/daryl/cmd/get`;
 const CREATE_DARYL_URL = `${API_URL}/public/daryl`;
+const GET_DARYL_URL = `${API_URL}/daryl/cmd/get`;
+const GET_HABIT_URL = `${API_URL}/daryl/cmd/habit`;
+const GET_SESSION_URL = `${API_URL}/daryl/cmd/session`;
+const GET_MESSAGE_URL = `${API_URL}/daryl/cmd/message`;
 
 function *loadAuth() {
   try {
@@ -42,13 +45,14 @@ function *checkAuth() {
     });
     const { resp: {daryl: { id, name } } } = yield call(() => r.json());
     yield put(Creators.auth(false, true, token, id, name));
+    yield call(loadInitialData);
   } catch (e) {
     yield put(Creators.auth(false, false, '', '', ''));
+    window.localStorage.setItem('auth', '');
   }
 }
 
 function *createDaryl(action) {
-  console.log('createDaryl', action);
   try {
     yield put(Creators.authCreating(true));
     const r = yield call(fetch, CREATE_DARYL_URL, {
@@ -69,9 +73,85 @@ function *createDaryl(action) {
       darylid: id,
       name: action.name,
     }));
+    yield call(loadInitialData);
   } catch (e) {
     yield put(Creators.auth(false, false, '', '', ''));
   }
+}
+
+function *initializeHabits() {
+  const token = yield select(selectToken());
+
+  console.log('initializeHabits');
+  try {
+    yield put(Creators.habitLoading(true));
+    const r = yield call(fetch, GET_HABIT_URL, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        'X-Daryl-Auth-Token': token,
+      },
+    });
+    const res = yield call(() => r.json());
+    yield put(Creators.habitLoading(false));
+    console.log(res);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function *initializeWorkSession() {
+  const token = yield select(selectToken());
+
+  console.log('initializeWorkSession');
+  try {
+    yield put(Creators.sessionLoading(true));
+    const r = yield call(fetch, GET_SESSION_URL, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        'X-Daryl-Auth-Token': token,
+      },
+    });
+    const res = yield call(() => r.json());
+    yield put(Creators.sessionLoading(false));
+    console.log(res);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function *initializeMessages() {
+  const token = yield select(selectToken());
+
+  console.log('initializeMessages');
+  try {
+    yield put(Creators.habitLoading(true));
+    const r = yield call(fetch, GET_MESSAGE_URL, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        'X-Daryl-Auth-Token': token,
+      },
+      body: JSON.stringify({
+        pagination: {
+          from: 0, to: 1,
+        },
+      }),
+    });
+    const res = yield call(() => r.json());
+    console.log(res);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function *loadInitialData() {
+  yield all([
+    call(initializeHabits),
+    call(initializeWorkSession),
+  ]);
+  //yield call(initializeMessages);
 }
 
 function *messageCreate(action) {

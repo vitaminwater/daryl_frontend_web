@@ -11,7 +11,12 @@ const { Types, Creators } = createActions({
   authDarylId: ['darylId'],
   authName: ['name'],
 
+  messageLoading: ['loading'],
   messageCreate: ['text', 'attrs'],
+
+  habitLoading: ['loading'],
+
+  sessionLoading: ['loading'],
 }, {})
 
 export {

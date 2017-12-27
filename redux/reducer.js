@@ -15,7 +15,7 @@ export const INITIAL_STATE = fromJS({
     exists: false,
     slices: [],
   },
-  habits: {
+  habit: {
     loading: false,
     habits: [],
   },
@@ -35,6 +35,10 @@ export const HANDLERS = {
   ['AUTH_AUTHENTICATED']: mergeState('auth'),
   ['AUTH_TOKEN']: mergeState('auth'),
   ['AUTH_DARYL_ID']: mergeState('auth'),
+
+  ['SESSION_LOADING']: mergeState('session'),
+
+  ['HABIT_LOADING']: mergeState('habit'),
 }
 
 export default createReducer(INITIAL_STATE, HANDLERS)
