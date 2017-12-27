@@ -20,6 +20,7 @@
     "next": "^3.2.2",
     "next-redux-saga": "1.0.1",
     "next-redux-wrapper": "1.2.0",
+    "query-string": "^5.0.1",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "react-intl": "^2.4.0",

@@ -19,6 +19,10 @@ export const INITIAL_STATE = fromJS({
     loading: false,
     habits: [],
   },
+  thread: {
+    loading: false,
+    threads: [],
+  },
 })
 
 const mergeState = prefix => (state, action) => {
@@ -39,6 +43,8 @@ export const HANDLERS = {
   ['SESSION_LOADING']: mergeState('session'),
 
   ['HABIT_LOADING']: mergeState('habit'),
+
+  ['THREAD_LOADING']: mergeState('thread'),
 }
 
 export default createReducer(INITIAL_STATE, HANDLERS)

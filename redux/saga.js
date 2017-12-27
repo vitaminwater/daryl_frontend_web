@@ -6,7 +6,7 @@ import es6promise from 'es6-promise'
 import 'isomorphic-unfetch'
 
 import { Types, Creators } from './actions'
-import { selectToken } from './selectors';
+import { selectToken, selectDarylId } from './selectors';
 
 es6promise.polyfill()
 
@@ -121,23 +121,25 @@ function *initializeWorkSession() {
   }
 }
 
-function *initializeMessages() {
+function *initializeThread(darylId, habitId) {
   const token = yield select(selectToken());
 
-  console.log('initializeMessages');
+  console.log('initializeThreads');
   try {
+    const body = JSON.stringify({
+      pagination: {
+        from: 0, to: 1,
+      },
+      darylId: darylId,
+      habitId: habitId,
+    });
     yield put(Creators.habitLoading(true));
-    const r = yield call(fetch, GET_MESSAGE_URL, {
+    const r = yield call(fetch, `${GET_MESSAGE_URL}?b=${body}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
         'X-Daryl-Auth-Token': token,
       },
-      body: JSON.stringify({
-        pagination: {
-          from: 0, to: 1,
-        },
-      }),
     });
     const res = yield call(() => r.json());
     console.log(res);
@@ -146,12 +148,28 @@ function *initializeMessages() {
   }
 }
 
+function* initializeDarylThread() {
+  const darylId = yield select(selectDarylId());
+  console.log(darylId);
+  yield call(initializeThread, darylId);
+}
+
+function* intitializeHabitThreads() {
+  const darylId = yield select(selectDarylId());
+  const habits = yield select(selectHabits);
+
+  all(habits.map((habit) => {
+    call(initializeThread, darylId, habit.get('id'));
+  }));
+}
+
 function *loadInitialData() {
   yield all([
+    call(initializeDarylThread),
     call(initializeHabits),
     call(initializeWorkSession),
   ]);
-  //yield call(initializeMessages);
+  yield call(initializeHabitThreads);
 }
 
 function *messageCreate(action) {
